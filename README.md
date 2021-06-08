@@ -1,4 +1,4 @@
-# owhiskey.github.io [![2DTWUs.jpg](https://z3.ax1x.com/2021/06/08/2DTWUs.jpg)](https://imgtu.com/i/2DTWUs)
+# owhiskey.github.io [![2DTWUs.md.jpg](https://z3.ax1x.com/2021/06/08/2DTWUs.md.jpg)](https://imgtu.com/i/2DTWUs)
 
 个人博客，记录想法
 
