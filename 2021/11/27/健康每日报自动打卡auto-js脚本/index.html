@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>川大健康每日报自动打卡auto.js脚本 - 尕zer - 爱说牛P的新疆儿娃子</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="解放双手！实现健康打卡自由，从我做起。今天偶然看到b站一个up在pc端用python实现了一个自动点赞的脚本，当他说到“脚本可以帮助人们做一些重复又无趣的工作”时，我立马就想到每天恶心的健康打卡。
+,"> 
+    <meta name="author" content="张峙青"> 
+    <link rel="alternative" href="atom.xml" title="尕zer - 爱说牛P的新疆儿娃子" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">尕zer - 爱说牛P的新疆儿娃子</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="http://github.com/owhiskey/owhiskey.github.io.git"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">川大健康每日报自动打卡auto.js脚本</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">川大健康每日报自动打卡auto.js脚本</h1>
+        <div class="stuff">
+            <span>十一月 27, 2021</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h3 id="解放双手！实现健康打卡自由，从我做起。"><a href="#解放双手！实现健康打卡自由，从我做起。" class="headerlink" title="解放双手！实现健康打卡自由，从我做起。"></a>解放双手！实现健康打卡自由，从我做起。</h3><p>今天偶然看到b站一个up在pc端用python实现了一个自动点赞的脚本，当他说到“脚本可以帮助人们做一些重复又无趣的工作”时，我立马就想到每天恶心的健康打卡。</p>
+<p>一天两分钟看着不多，两年每天两分钟可不是个小数字：365*2/60=12.16小时，直接半天没了，以后疫情常态化每天花这时间打卡简直是”谋财害命“。于是我今天花了半天整了个川大微服务自动打卡的脚本，实测能用。</p>
+<p>环境和软件具体可以看这个 <a href="https://zhuanlan.zhihu.com/p/90065914" target="_blank" rel="noopener">网址</a>，包括下载在内讲的很详细。（ps：auto.js只能用在安卓）</p>
+<p>废话不多说，下面是基于auto.js的代码：（新建个xxx.sj文件，复制进去就行）</p>
+<hr>
+<blockquote>
+<p>auto.waitFor();</p>
+<p>setScreenMetrics(1080,2340);</p>
+<p><em>//测试版本，如需改用可微调“swipe”等选项，原理基本相同。具体参考文档：<a href="https://hyb1996.github.io/AutoJs-Docs/" target="_blank" rel="noopener">https://hyb1996.github.io/AutoJs-Docs/</a></em></p>
+<p><em>//作者：gazer</em></p>
+<p>if(!device.isScreenOn())</p>
+<p>{</p>
+<p>  device.wakeUp();</p>
+<p>  <em>//这里可以放你的开机密码，这样就可以在应用里设置每日运行了。</em></p>
+<p>}</p>
+<p><strong>var</strong> appName = “微信”;</p>
+<p>app.launchApp(appName); <em>//打开微信</em></p>
+<p>sleep(5000);</p>
+<p>if(!text(“四川大学微服务”).findOnce())<em>//如果主页没有微服务的标签，则从公众号打开。</em></p>
+<p>{</p>
+<p>  click(“通讯录”); <em>//点开通讯录所在位置</em></p>
+<p>  sleep(700);</p>
+<p>  click(“公众号”); <em>//点开公众号所在位置</em></p>
+<p>  sleep(700);</p>
+<p>  click(1050,1491); <em>//点击“s”选项</em></p>
+<p>  sleep(700);</p>
+<p>}</p>
+<p>click(“四川大学微服务”); <em>//点开微服务</em></p>
+<p>sleep(1200);</p>
+<p>click(“微服务”);<em>//点开微服务一级菜单</em></p>
+<p><em>//id(“av9”).className(“android.widget.TextView”).text(“微服务”).findOne().parent().parent().click(); 本句通用性不高故弃用</em></p>
+<p>sleep(4000); </p>
+<p>click(“健康每日报”); <em>//健康每日报</em></p>
+<p>sleep(3000);</p>
+<p>swipe(500,2100,500,500,800);</p>
+<p>click(“请打开手机位置功能”); <em>//获取地理位置</em></p>
+<p>sleep(3000);</p>
+<p><strong>var</strong> i = 1;</p>
+<p>while(i&lt;5)</p>
+<p>{</p>
+<p>  swipe(500,2200,500,100,300);<em>//滑到最底</em></p>
+<p>  i++;</p>
+<p>}</p>
+<p>click(“提交信息”);</p>
+<p>sleep(1000);</p>
+<p>swipe(500,2330,500,2100,100);</p>
+<p>sleep(500);</p>
+<p>toast(“今日打卡完成”);</p>
+</blockquote>
+<p>之后在auto.js里设置每日12点自启就ok了！</p>
+<hr>
+<p>小声说一句：游戏的第一关已经做完了，正在打磨细节。虽然是跟着各种教程做的，但好歹也算我的第一个作品嘛，俗话说的好：<del>“你设计的前5个游戏都是狗屎”</del>，那我至少也走了第一步了hh。</p>
+<hr>
+<p>最后贴一句双城之战里Viktor的话吧：</p>
+<p>​    我们迷失了自我，</p>
+<p>​    丢掉了梦想，</p>
+<p>​    只为了追求 - 伟大？</p>
+<p>​    我们没能坚守善心，必须得纠正我们犯的错。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/5146554.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/qq/001faIUs4M2zna.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
