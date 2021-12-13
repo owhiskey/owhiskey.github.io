@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>小demo和unity Update/FixedUpdate区别 - 尕zer - 爱说牛P的新疆儿娃子</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="先放个demo以示学习成果这是链接 ，密码：3dverf
+不是很难，但玩之前可以看看设定和操作方法。
+
+再说说 Update 和 FixedUpdate 的区别吧学习结论：
+
+有关 Input 一类,"> 
+    <meta name="author" content="张峙青"> 
+    <link rel="alternative" href="atom.xml" title="尕zer - 爱说牛P的新疆儿娃子" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">尕zer - 爱说牛P的新疆儿娃子</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="http://github.com/owhiskey/owhiskey.github.io.git"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">小demo和unity Update/FixedUpdate区别</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">小demo和unity Update/FixedUpdate区别</h1>
+        <div class="stuff">
+            <span>十二月 14, 2021</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <h3 id="先放个demo以示学习成果"><a href="#先放个demo以示学习成果" class="headerlink" title="先放个demo以示学习成果"></a>先放个demo以示学习成果</h3><p>这是<a href="https://share.weiyun.com/GLrIzfLX" target="_blank" rel="noopener" title="腾讯微云">链接</a> ，密码：3dverf</p>
+<p>不是很难，但玩之前可以看看设定和操作方法。</p>
+<hr>
+<h3 id="再说说-Update-和-FixedUpdate-的区别吧"><a href="#再说说-Update-和-FixedUpdate-的区别吧" class="headerlink" title="再说说 Update 和 FixedUpdate 的区别吧"></a>再说说 Update 和 FixedUpdate 的区别吧</h3><p>学习结论：</p>
+<blockquote>
+<p><strong>有关 Input 一类的输入的命令放在Update中执行(获取输入的按键等)</strong></p>
+<p><strong>有关 计算的物理命令放在FixedUpdate中执行 (移动,跳跃等)</strong></p>
+</blockquote>
+<p>原因也很简单：</p>
+<p>Update 为每一实际帧时间调用一次（与电脑性能有关）</p>
+<p>FixedUpdate 为每一设定帧时间调用一次 (游戏内的固定间隔调用) </p>
+<p>这里再举一个<a href="https://www.bilibili.com/read/cv4538448/" target="_blank" rel="noopener">例子</a>（作者：Ryuu-64 出处：bilibili）</p>
+<p>对于 Update中的计算</p>
+<p>举一个很简单的例子,如果我们做个小游戏,控制玩家移动</p>
+<p>在移动的时玩家改变玩家的位置让他移动 x0 的距离</p>
+<p>如果我们把实现他的函数放在 Update 中他就会每一帧执行一次</p>
+<p>那么问题来了 </p>
+<p>如果有一个 加钱加到九万八的电脑 和一个 小霸王电脑 同玩这个游戏</p>
+<p>性能好的帧数高,性能差的帧数底</p>
+<p>这里玩家每秒的移动距离就会是 x0 * 帧率</p>
+<p>那么……. 好的电脑就会比差的会多移动一点距离</p>
+<p>也就是在玩起来的时候就会出现 “他电脑比我好,他跑的都比我快些” 的现象</p>
+<p>所以说我们会将 x0 乘上帧生成时间 (Time.deltaTime) 因为 :</p>
+<p>生成帧越快,那么新生成帧和上一生成帧的间隔时间越小即帧生成时间小,</p>
+<p>生成帧越慢,那么新生成帧和上一生成帧的间隔时间越大即帧生成时间大,</p>
+<p>乘上这个时间,就解决了快的电脑移动过快的问题 这时 :</p>
+<p>虽然快的电脑执行的移动次数多,但是每次移动的距离会少点</p>
+<p>虽然慢的电脑执行的移动次数少,但是每次移动的距离会多点</p>
+<p>这样,就保证了在不同电脑上,移动的距离都是一样的……………… </p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/5146554.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/qq/001faIUs4M2zna.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
