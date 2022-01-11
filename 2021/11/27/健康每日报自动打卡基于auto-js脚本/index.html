@@ -117,6 +117,58 @@
 </blockquote>
 <p>之后在auto.js里设置每日12点自启就ok了！</p>
 <hr>
+<p>1月10日补充一段qq自动点赞的代码：</p>
+<blockquote>
+<p><em>// 测试版本，给tyk做的用于qq自动点赞的脚本</em></p>
+<p><em>// 官方文档：<a href="https://hyb1996.github.io/AutoJs-Docs/" target="_blank" rel="noopener">https://hyb1996.github.io/AutoJs-Docs/</a></em></p>
+<p><em>// 作者：gazer</em></p>
+<p>auto.waitFor(); <em>//请求无障碍权限</em></p>
+<p>setScreenMetrics(1080,2340); <em>//设置分辨率为1080*2340</em></p>
+<p><strong>var</strong> appName = “QQ”;</p>
+<p><strong>var</strong> 延迟 = 50; <em>//0.05秒，也就是1秒20个赞。可以改，但建议不要超过屏幕刷新率</em></p>
+<p><strong>function</strong> 进入点赞界面()</p>
+<p>{</p>
+<p>  app.launchApp(appName); <em>//打开qq</em></p>
+<p>  sleep(2000); <em>//默认两秒的打开时间，可调整</em></p>
+<p>  if(!text(“动态”).findOnce()) <em>//用于判断是否处于主界面</em></p>
+<p>  {</p>
+<p>​    toast(“请确保qq在主界面，脚本已关闭”);</p>
+<p>​    exit(); <em>//退出脚本</em></p>
+<p>  }</p>
+<p>  click(108,172); <em>//步骤一点击屏幕位置来实现</em></p>
+<p>  sleep(1500); <em>//1.5秒加载时间</em></p>
+<p>  click(154,380); <em>//步骤二</em></p>
+<p>  sleep(500);</p>
+<p>  click(995,592); <em>//步骤三</em></p>
+<p>  sleep(500);</p>
+<p>}</p>
+<p><strong>function</strong> 赞()</p>
+<p>{</p>
+<p>  className(“ImageView”).desc(“赞”).untilFind().each(<strong>function</strong>(item){</p>
+<p>  for(<strong>var</strong> i = 0; i &lt; 20; i++) <em>//超级会员能点20个赞，nb</em></p>
+<p>  {</p>
+<p>​    item.click();</p>
+<p>​    sleep(延迟);</p>
+<p>  }</p>
+<p>  });</p>
+<p>}</p>
+<p><strong>function</strong> 退出()</p>
+<p>{</p>
+<p>  for(<strong>var</strong> a = 0; a &lt; 3; a++)</p>
+<p>  {</p>
+<p>​    swipe(900,2330,900,2100,100);<em>//模拟全屏手势中“返回上一级”操作，可移除项</em></p>
+<p>​    sleep(200);</p>
+<p>  }</p>
+<p>  swipe(500,2330,500,2100,100); <em>//模拟全屏手势中“返回主屏幕”操作，可移除项</em></p>
+<p>  sleep(500);</p>
+<p>  toast(“今日自动点赞完成”);</p>
+<p>  exit();</p>
+<p>}</p>
+<p>进入点赞界面();</p>
+<p>赞();</p>
+<p>退出();</p>
+</blockquote>
+<hr>
 <p>小声说一句：游戏的第一关已经做完了，正在打磨细节。虽然是跟着各种教程做的，但好歹也算我的第一个作品嘛，俗话说的好：<del>“你设计的前5个游戏都是狗屎”</del>，那我至少也走了第一步了hh。</p>
 <hr>
 <p>最后贴一句双城之战里Viktor的话吧：</p>
