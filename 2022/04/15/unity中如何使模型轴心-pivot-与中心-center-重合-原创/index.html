@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html lang="zh" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>&#39;【unity】中如何使模型轴心[pivot]与中心[center]重合(部分原创)&#39; - 尕zer - 爱说牛P的新疆儿娃子</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="在学习unity的过程中经常会被一些世界坐标、模型坐标、中心点的位置等概念搞晕，今天就来做个简单的总结。首先来明确一下这几个概念的区别：
+一，pivot/center的定义：Center：游戏物体中,"> 
+    <meta name="author" content="owhiskey"> 
+    <link rel="alternative" href="atom.xml" title="尕zer - 爱说牛P的新疆儿娃子" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+              google_ad_client: "ca-pub-8691406134231910",
+              enable_page_level_ads: true
+         });
+    </script>
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">尕zer - 爱说牛P的新疆儿娃子</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="http://github.com/owhiskey/owhiskey.github.io.git"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">'【unity】中如何使模型轴心[pivot]与中心[center]重合(部分原创)'</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">'【unity】中如何使模型轴心[pivot]与中心[center]重合(部分原创)'</h1>
+        <div class="stuff">
+            <span>四月 15, 2022</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <p>在学习unity的过程中经常会被一些世界坐标、模型坐标、中心点的位置等概念搞晕，今天就来做个简单的总结。首先来明确一下这几个概念的区别：</p>
+<h4 id="一，pivot-center的定义："><a href="#一，pivot-center的定义：" class="headerlink" title="一，pivot/center的定义："></a>一，pivot/center的定义：</h4><p><strong>Center</strong>：游戏物体中心位置的坐标原点，相当于游戏物体的形状中心，是 Unity 根据游戏物体的形状自动确定的坐标点。</p>
+<img src="https://s2.loli.net/2022/04/16/ChQqixNKstpz42d.png" alt="image.png" style="zoom:50%;" />
+
+<p>如上图所示。</p>
+<p><strong>Pivot</strong>：游戏物体<strong>自身的坐标原点</strong>，是美术设计师在<strong>建模时设置</strong>的模型原点。</p>
+<img src="https://s2.loli.net/2022/04/16/bz79HhmBWYgfASC.png" alt="20220416103343.png" style="zoom:50%;" />
+
+<p>Inspector 面板中 Transform 组件中的 Position 指的就是 Pivot 状态下模型坐标点的位置。（既transform.position获取到的值就是Pivot状态下的值）</p>
+<img src="https://s2.loli.net/2022/04/16/dPm8xXD7arUL9Gz.png" alt="image.png" style="zoom:80%;" />
+
+<p>可以看出一个模型在pivot状态和center状态下坐标原点不一定是处在模型的同一位置。</p>
+<h4 id="二，如何通过unity让二者重合"><a href="#二，如何通过unity让二者重合" class="headerlink" title="二，如何通过unity让二者重合"></a>二，如何通过unity让二者重合</h4><p>在网上查阅各种资料后，发现大致有两种方法：</p>
+<ol>
+<li><p>联系建模的同事，通过建模软件修改坐标原点至质心位置，然后重新导入模型，该方法可以从本质上实现对模型中心点的设置。</p>
+<p>以3dmax为例：将模型导入到3DMax中后，全选所有物体，选择右侧工具栏的层次-&gt;轴-&gt;仅影响轴-&gt;居中到对象。然后再将模型导出即可。</p>
+<img src="https://s2.loli.net/2022/04/16/jZw5AmGUXQiyhD9.png" alt="image.png" style="zoom:80%;" />
+</li>
+<li><p>只通过unity：“创建一个空gameobject在模型的center位置，然后让模型成为该空gameobject的子物体，模型pivot就会与center重合”</p>
+<img src="https://s2.loli.net/2022/04/16/VtqmYBnEITMw9C2.png" alt="_X_J_7HZS_N_MX7____2R_S.png" style="zoom:50%;" />
+</li>
+<li><p>方法2的脚本版，具体可<a href="https://blog.csdn.net/qq_22025173/article/details/105412632" target="_blank" rel="noopener" title="版权声明：本文为qq_22025173原创文章，遵循[ CC 4.0 BY-SA ]版权协议，">参考博客</a>或<a href="https://blog.csdn.net/beihuanlihe130/article/details/76255965?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_aa&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1.pc_relevant_aa" target="_blank" rel="noopener">参考大佬博客</a>。</p>
+</li>
+</ol>
+<p>但是在实际操作后本人发现，其实“方法2/3”会给开发来带一定的问题：创造的空物体并不能隐藏或删除，会给原有代码带来隐患；并且该种方法并没有改变原始物体MeshFilter的中心点位置，如果用户要对其MeshFilter进行操作，可能会有其他的情况发生。</p>
+<hr>
+<p>在这里分享下我自己摸索出的<strong>第四种方法：</strong>如果模型由多个部分组成，可以提前算好轴心与中心的“偏差值”，然后直接在prefeb里给每个部件的position都加上“偏差值”。但是场景里物体的位置也会相应改变，这种方法可以实现轴心与中心重合的效果，而不用创建物体。（但笔者水平不足，也不能断定其一定没有反作用，仅供参考）</p>
+<img src="https://s2.loli.net/2022/04/16/s1REerOubctK3hx.png" alt="image.png" style="zoom:27%;" />
+
+<img src="https://s2.loli.net/2022/04/16/f3iFBWrgsL4oND2.png" alt="_ZFKKRY1OJ49VJ__V_5_EHN.png" style="zoom:33%;" />
+
+<img src="https://s2.loli.net/2022/04/16/N32oqp7xKH6GgZC.png" alt="UXNQZ6VL_C3`C__H__F0_@P.png" style="zoom:33%;" />
+
+
+
+<p>感谢阅读，如有帮助，不甚荣幸。祝诸君身体健康，保持热爱。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title='0' data-url='http://link.hhtjim.com/163/5146554.mp3'></li>
+                        
+                    
+                        
+                            <li title='1' data-url='http://link.hhtjim.com/qq/001faIUs4M2zna.mp3'></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id='gitalk-container' class="comment link"
+        data-ae='false'
+        data-ci=''
+        data-cs=''
+        data-r=''
+        data-o=''
+        data-a=''
+        data-d='false'
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
